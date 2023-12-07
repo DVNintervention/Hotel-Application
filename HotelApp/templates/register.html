@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Login and Registration Form Content -->
+    <section class="auth-block">
+        <div class="container">
+            <div class="row">
+                <!-- Login Form -->
+                <div class="col-md-6 offset-md-3" id="login-form">
+                    <h2>Login</h2>
+                    
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <!-- Replace these with your actual login form fields -->
+                        <p><input type="email" name="email" placeholder="Email"></p>
+                        <p><input type="password" name="password" placeholder="Password"></p>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+
+                    <p class="auth-toggle">Not registered? <a href="#" onclick="toggleForms()">Sign up here!</a></p>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="col-md-6 offset-md-3" id="register-form" style="display: none;">
+                    <h2>Register</h2>
+                    <form method="post" action="{% url 'register' %}">
+                        {% csrf_token %}
+                         <!-- First Name Field -->
+                        <div class="mb-3">
+                            <label for="first-name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Enter your first name" required>
+                        </div>
+
+                        <!-- Last Name Field -->
+                        <div class="mb-3">
+                            <label for="last-name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Enter your last name" required>
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password" required>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    <p class="auth-toggle">Already have an account? <a href="#" onclick="toggleForms()">Login here!</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const rootStyle = document.documentElement.style;
+            rootStyle.setProperty('--tenant-primary-color', '{{ tenant.primary_color }}');
+        });
+
+        function toggleForms() {
+            var loginForm = document.getElementById("login-form");
+            var registerForm = document.getElementById("register-form");
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+            } else {
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+            }
+        }
+    </script>
+{% endblock %}
